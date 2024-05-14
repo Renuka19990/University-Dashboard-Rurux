@@ -1,24 +1,31 @@
-import React from 'react'
-import { Route, Routes } from 'react-router-dom'
-import StudentDashboard from '../Pages/StudentDashboard'
-import AdminDashboard from '../Pages/AdminDashboard'
-import AdminLogin from '../components/AdminLogin'
-import StudentLogin from '../components/StudentLogin'
-import Signup from '../components/Signup'
+import React, {  useContext } from 'react';
+import { Route, Routes, Navigate } from 'react-router-dom';
+import Login from '../Pages/Login';
+import Signup from '../Pages/Signup';
+import PrivateRoute from './PrivateRoute';
+import StudentList from '../AdminPage.jsx/Students';
+import MarksPage from '../AdminPage.jsx/Marks';
 
-export default function AllRouter() {
+import SubjectPage from '../AdminPage.jsx/SubjectPage';
+import StreamPage from '../AdminPage.jsx/Stream';
+
+
+const AllRoutes = () => {
   return (
-    <div>
+    <>
       <Routes>
-        <Route path="/admin/login" element={<AdminLogin />} />
-        <Route path='/student/login' element={<StudentLogin/>} />
-        <Route path="/student/register" element={<Signup/>} />
-        <Route path="/admin/dashboard" element={<AdminDashboard />} />
-        <Route path="/student/dashboard" element={<StudentDashboard />} />
-     
-      
-        {/* <Route path="*" element={<NotFound />} /> */}
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} />
+        
+          <Route path="/" element={<PrivateRoute Component={StudentList} />} />
+          <Route path="/studentList" element={<PrivateRoute Component={StudentList} />} />
+          <Route path="/marks" element={<PrivateRoute Component={MarksPage} />} />
+          <Route path="/stream" element={<PrivateRoute Component={StreamPage} />} />
+          <Route path="/subject" element={<PrivateRoute Component={SubjectPage} />} />
+       
       </Routes>
-    </div>
-  )
-}
+    </>
+  );
+};
+
+export default AllRoutes;

@@ -1,78 +1,72 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { Box, Flex, HStack, IconButton, useDisclosure, Stack, Button } from '@chakra-ui/react';
-import { HamburgerIcon, CloseIcon } from '@chakra-ui/icons';
+import React, { useContext } from "react";
+import { Box, Flex } from "@chakra-ui/react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { AuthContext } from "../Context/AuthContextApi";
 
-const Navbar = ({ isAdmin, isStudent }) => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+const Navbar = () => {
+  const { isLoggedIn, setLoggedIn } = useContext(AuthContext);
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    setLoggedIn(false);
+    alert("Logout successfully");
+    navigate("/login");
+  };
 
   return (
-    <Box bg="gray.100" px={4}>
-      <Flex h={16} alignItems="center" justifyContent="space-between">
-        <IconButton
-          size="md"
-          icon={isOpen ? <CloseIcon /> : <HamburgerIcon />}
-          aria-label="Open Menu"
-          display={{ md: 'none' }}
-          onClick={isOpen ? onClose : onOpen}
-        />
-        <HStack spacing={8} alignItems="center">
-          <Box as={Link} to="/">University Dashboard</Box>
-          <HStack as="nav" spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {isAdmin && (
-              <>
-                <Button as={Link} to="/admin/dashboard">Dashboard</Button>
-                <Button as={Link} to="/admin/logout">Logout</Button>
-              </>
-            )}
-            {isStudent && (
-              <>
-                <Button as={Link} to="/student/profile">Profile</Button>
-                <Button as={Link} to="/student/performance">Performance</Button>
-                <Button as={Link} to="/student/logout">Logout</Button>
-              </>
-            )}
-            {!isAdmin && !isStudent && (
-              <>
-                <Button as={Link} to="/student/login">Student Login</Button>
-                <Button as={Link} to="/admin/login">Admin Login</Button>
-              </>
-            )}
-          </HStack>
-        </HStack>
-        <Flex alignItems="center">
-          <HStack spacing={4} display={{ base: 'none', md: 'flex' }}>
-            {/* Additional items can be added here */}
-          </HStack>
-        </Flex>
-      </Flex>
+    <Flex
+      as="nav"
+      align="center"
+      padding="1.5rem"
+      bg="gray.500"
+      color="white"
+    >
+      <Box mr="8px">University</Box>
 
-      {isOpen ? (
-        <Box pb={4} display={{ md: 'none' }}>
-          <Stack as="nav" spacing={4}>
-            {isAdmin && (
-              <>
-                <Button as={Link} to="/admin/dashboard">Dashboard</Button>
-                <Button as={Link} to="/admin/logout">Logout</Button>
-              </>
-            )}
-            {isStudent && (
-              <>
-                <Button as={Link} to="/student/profile">Profile</Button>
-                <Button as={Link} to="/student/performance">Performance</Button>
-                <Button as={Link} to="/student/logout">Logout</Button>
-              </>
-            )}
-            {!isAdmin && !isStudent && (
-              <>
-                <Button as={Link} to="/student/login">Student Login</Button>
-                <Button as={Link} to="/admin/login">Admin Login</Button>
-              </>
-            )}
-          </Stack>
+      {isLoggedIn && (
+        <Box
+          display={{ base: "none", md: "flex" }}
+          width={{ base: "full", md: "auto" }}
+          alignItems="center"
+          gap={30}
+          fontSize={20}
+          justifyContent={"space-between"}
+        >
+          <NavLink to="/studentlist" pr={4}>
+            Students
+          </NavLink>
+          <NavLink to="/subject" pr={6}>
+            Subjects
+          </NavLink>
+          <NavLink to="/marks" pr={4}>
+            Marks
+          </NavLink>
+          <NavLink to="/stream" pr={4}>
+            Streams
+          </NavLink>
+          <NavLink to="/" pr={4} onClick={handleLogout}>
+            Logout
+          </NavLink>
         </Box>
-      ) : null}
-    </Box>
+      )}
+
+      {!isLoggedIn && (
+        <Box
+          display={{ base: "none", md: "flex" }}
+          alignItems="center"
+          gap={100}
+          justifyContent="space-evenly"
+        >
+          <NavLink to="/login" mr={4}>
+            Login
+          </NavLink>
+          <NavLink to="/signup" mr={4}>
+            SignUp
+          </NavLink>
+        </Box>
+      )}
+    </Flex>
   );
 };
 

@@ -1,20 +1,30 @@
-const jwt = require('jsonwebtoken');
-const dotenv = require('dotenv');
+require("dotenv").config();
+const jwt = require("jsonwebtoken");
+const { blacklistModel } = require("../Models/blacklist.model");
 
-dotenv.config();
-
-const auth = (req, res, next) => {
-  const token = req.header('x-auth-token');
-  if (!token) {
-    return res.status(401).json({ msg: 'No token, authorization denied' });
-  }
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = decoded.user;
-    next();
-  } catch (err) {
-    res.status(401).json({ msg: 'Token is not valid' });
-  }
-};
-
-module.exports = auth;
+const auth=async(req,res,next)=>{
+    const token=req.headers["authorization"].split(" ")[1];
+    if(!token){
+     return res.status(401).json({msg:"token is not provided"});
+    }
+    const blackList=await blacklistModel.findOne({token});
+    if(blackList){
+       return res.status(401).json({msg:"user is already logout please login again"});
+    }
+    jwt.verify(token,"masai",(err,decoded)=>{
+     if(err) throw new Error(err);
+     if(decoded){
+          req.studentId=decoded.studentId;
+        
+          req.role=decoded.role;
+          console.log(decoded.role);
+          console.log("auth")
+         next();
+     }
+    })
+ }
+ 
+ 
+ module.exports={auth};
+ 
+ 
