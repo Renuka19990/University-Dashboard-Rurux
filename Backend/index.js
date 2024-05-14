@@ -3,7 +3,7 @@ const { connectToDb } = require('./src/Config/config');
 const cors = require('cors');
 const app = express();
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 const StudentRoute = require('./src/Router/Student.router');
 const adminRouter = require('./src/Router/admin.router');
 
