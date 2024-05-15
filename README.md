@@ -71,19 +71,17 @@ Password: 1234
 The development focused on creating an intuitive and secure platform that emphasizes community building among food enthusiasts. Assumptions include a high engagement rate based on quality content and user-friendly features.
 
 # Navbar
-![Navbar]()
+![Navbar](FrontEnd/public/navbar12.png)
 
-# SignIn / SignUp
-![SignIn/SignUp]()
+#  SignUp
+![SignIn/SignUp](FrontEnd/public/Screenshot_20240515_104954.png)
 
 # Mid-Section / Carousel
-![Carousel]()
+![Carousel](FrontEnd/public/middlepage.png)
 
-# Profile 
-![Profile]()
+# SignIn  
+![Profile](FrontEnd/public/loginpage12.png)
 
-# Footer
-![Footer](g)
 
 
 
