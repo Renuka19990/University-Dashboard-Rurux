@@ -1,9 +1,10 @@
-// components/Admin/StudentList.js
 import React, { useEffect, useState } from "react";
-import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
+import axios from 'axios';
+import { Table, Thead, Tbody, Tr, Th, Td, Box, Text } from "@chakra-ui/react";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
+  const [error, setError] = useState('');
 
   useEffect(() => {
     fetchStudentList();
@@ -11,25 +12,24 @@ const StudentList = () => {
 
   const fetchStudentList = async () => {
     try {
-      const response = await fetch("https://university-dashboard-rurux.onrender.com/adminApi/studentlist", {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
+      const response = await axios.get("https://university-dashboard-rurux.onrender.com/adminApi/studentlist", {
+        withCredentials: true, // Include this line to ensure cookies are sent if needed
       });
-      if (!response.ok) {
-        throw new Error("Failed to fetch student list");
-      }
-      const data = await response.json();
-      console.log(data)
-      setStudents(data);
+      console.log("Fetched data:", response.data); // Log fetched data
+      setStudents(response.data);
     } catch (error) {
-      console.error(error);
+      console.error("Error fetching student list:", error.message);
+      setError('Failed to fetch student list. Please try again later.');
     }
   };
 
   return (
     <Box className="container">
+      {error && (
+        <Text color="red.500" mb={4}>
+          {error}
+        </Text>
+      )}
       <Table className="table" id="makeEditable">
         <Thead>
           <Tr>
@@ -45,7 +45,7 @@ const StudentList = () => {
               <Td>{student.name}</Td>
               <Td>{student.email}</Td>
               <Td>{student.password}</Td>
-              {/* <Td>{student.role}</Td> */}
+              <Td>{student.role}</Td> {/* Uncomment if role is available */}
             </Tr>
           ))}
         </Tbody>

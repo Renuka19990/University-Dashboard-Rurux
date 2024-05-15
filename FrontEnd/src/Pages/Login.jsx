@@ -13,7 +13,9 @@ import {
   Text,
   useColorModeValue,
 } from '@chakra-ui/react';
+import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { NavLink, useNavigate } from 'react-router-dom';
+
 import { AuthContext } from '../Context/AuthContextApi';
 
 function Login() {
@@ -22,12 +24,14 @@ function Login() {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const { setLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
+
   const handleLogin = async () => {
     setError('');
     setLoading(true);
-  
+
     try {
       const response = await fetch('https://university-dashboard-rurux.onrender.com/studentApi/login', {
         method: 'POST',
@@ -36,32 +40,29 @@ function Login() {
         },
         body: JSON.stringify({ email, password }),
       });
-  
-      // Check if response is OK and parse JSON if possible
-      if (!response.ok) {
-        const errorText = await response.text();
-        throw new Error(`Login failed: ${errorText}`);
-      }
-  
       const data = await response.json();
-  
+      if (!response.ok) {
+        throw new Error('Login failed');
+      }
       setLoggedIn({
         isAuth: true,
-        token: data.accessToken,
+        token: data.accessToken
       });
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
-  
-      alert("Login successful");
-      navigate("/");
+      
+      setSuccessMessage('Login successful! Redirecting to the dashboard...');
+      setTimeout(() => {
+        navigate("/");
+      }, 2000);
     } catch (error) {
+      setError('Invalid email or password. Please try again.');
       console.error('Login error:', error.message);
-      setError('Login failed. Please check your credentials and try again.');
     }
-  
+
     setLoading(false);
   };
-  
+
   return (
     <Flex
       minH={'100vh'}
@@ -72,10 +73,10 @@ function Login() {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Sign in to your account
+            Login
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-          welcom to <NavLink to="/"> login page</NavLink> 
+            Welcome
           </Text>
         </Stack>
         <Box
@@ -106,7 +107,7 @@ function Login() {
                     variant={'ghost'}
                     onClick={() => setShowPassword((showPassword) => !showPassword)}
                   >
-                    {showPassword ? 'Hide' : 'Show'}
+                    {showPassword ? <ViewIcon /> : <ViewOffIcon />}
                   </Button>
                 </InputRightElement>
               </InputGroup>
@@ -116,12 +117,17 @@ function Login() {
                 {error}
               </Text>
             )}
+            {successMessage && (
+              <Text color={'green.500'} fontSize={'sm'}>
+                {successMessage}
+              </Text>
+            )}
             <Stack spacing={10} pt={2}>
               <Button
                 isLoading={loading}
                 loadingText="Logging in..."
                 size="lg"
-                bg={'teal.400'}
+                bg={'blue.400'}
                 color={'white'}
                 _hover={{
                   bg: 'blue.500',
@@ -133,7 +139,7 @@ function Login() {
             </Stack>
             <Stack pt={6}>
               <Text align={'center'}>
-                Not registered?{' '}
+                Not registered yet?{' '}
                 <NavLink color={'blue.400'} to="/signup">
                   Sign up
                 </NavLink>

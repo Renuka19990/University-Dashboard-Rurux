@@ -7,21 +7,21 @@ import axios from "axios";
     token:""
   }
 export const AuthContext =createContext();
-// eslint-disable-next-line react/prop-types
+
 export const AuthContextProvider=({children})=>{
       const [isLoggedIn, setLoggedIn] = useState(userRes);
    
       const handleLogin = async({ email, password }) => {
-         // eslint-disable-next-line no-async-promise-executor
+         
          return new Promise(async(resolve,reject)=>{
             try {
                 console.log(email,
                   password)
-                const res = await axios.post("https://university-dashboard-rurux.onrender.com/student/login", {
+                const res = await axios.post("https://university-dashboard-rurux.onrender.com/studentApi/login", {
                   email,
                   password,
                 });
-                // setAuth(res.data.isAuth);
+              
                 if(res){
                   setLoggedIn({
                     isAuth:true,
@@ -47,7 +47,7 @@ export const AuthContextProvider=({children})=>{
       const handleLogout = async () => {
         try {
           const token = localStorage.getItem("accessToken");
-          const res = await axios.get("https://university-dashboard-rurux.onrender.com/users/logout", {
+          const res = await axios.get("https://university-dashboard-rurux.onrender.com/studentApi/logout", {
             headers: {
               Authorization: `Bearer ${token}`,
             },
