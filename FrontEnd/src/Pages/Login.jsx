@@ -12,6 +12,9 @@ import {
   Heading,
   Text,
   useColorModeValue,
+  VStack,
+  HStack,
+  Divider,
 } from '@chakra-ui/react';
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { NavLink, useNavigate } from 'react-router-dom';
@@ -68,15 +71,15 @@ function Login() {
       minH={'100vh'}
       align={'center'}
       justify={'center'}
-      bg={useColorModeValue('gray.50', 'gray.800')}
+      bg={useColorModeValue('gray.50', 'gray.900')}
     >
-      <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+      <Stack spacing={4} mx={'auto'} width={"600px"} height={'500px'} py={12} px={6}>
         <Stack align={'center'}>
-          <Heading fontSize={'4xl'} textAlign={'center'}>
-            Login
+          <Heading fontSize={'4xl'} textAlign={'center'} color={useColorModeValue('gray.800', 'white')}>
+            Welcome Back
           </Heading>
-          <Text fontSize={'lg'} color={'gray.600'}>
-            Welcome
+          <Text fontSize={'lg'} color={'gray.500'}>
+            Login to access your account
           </Text>
         </Stack>
         <Box
@@ -92,6 +95,12 @@ function Login() {
                 type="email"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
+                bg={useColorModeValue('gray.100', 'gray.600')}
+                border={0}
+                _focus={{
+                  bg: useColorModeValue('gray.200', 'gray.500'),
+                  borderColor: useColorModeValue('teal.400', 'teal.500'),
+                }}
               />
             </FormControl>
             <FormControl id="password" isRequired>
@@ -101,6 +110,12 @@ function Login() {
                   type={showPassword ? 'text' : 'password'}
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
+                  bg={useColorModeValue('gray.100', 'gray.600')}
+                  border={0}
+                  _focus={{
+                    bg: useColorModeValue('gray.200', 'gray.500'),
+                    borderColor: useColorModeValue('teal.400', 'teal.500'),
+                  }}
                 />
                 <InputRightElement h={'full'}>
                   <Button
@@ -127,24 +142,26 @@ function Login() {
                 isLoading={loading}
                 loadingText="Logging in..."
                 size="lg"
-                bg={'blue.400'}
+                bg={'teal.400'}
                 color={'white'}
                 _hover={{
-                  bg: 'blue.500',
+                  bg: 'teal.500',
                 }}
                 onClick={handleLogin}
               >
                 Login
               </Button>
             </Stack>
-            <Stack pt={6}>
-              <Text align={'center'}>
-                Not registered yet?{' '}
-                <NavLink color={'blue.400'} to="/signup">
+            <HStack pt={6}>
+              <Divider />
+              <Text align={'center'} fontSize={'sm'}>
+                Not registered?{' '}
+                <NavLink to="/signup" style={{ color: 'teal.400', fontWeight: 'bold' }}>
                   Sign up
                 </NavLink>
               </Text>
-            </Stack>
+              <Divider />
+            </HStack>
           </Stack>
         </Box>
       </Stack>

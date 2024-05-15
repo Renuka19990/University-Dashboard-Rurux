@@ -19,8 +19,10 @@ const Navbar = () => {
       as="nav"
       align="center"
       padding="1.5rem"
-      bg="gray.500"
+      bg="black"
       color="white"
+      position={'sticky'}
+      top={0}
     >
       <Box mr="8px">University</Box>
 
@@ -52,11 +54,12 @@ const Navbar = () => {
       )}
 
       {!isLoggedIn && (
-        <Box
+        <Flex
           display={{ base: "none", md: "flex" }}
-          alignItems="center"
-          gap={100}
-          justifyContent="space-evenly"
+          alignItems="flex-end"
+          gap={10}
+          // justifyContent="space-evenly"
+          justifyContent={"flex-end"}
         >
           <NavLink to="/login" mr={4}>
             Login
@@ -64,7 +67,7 @@ const Navbar = () => {
           <NavLink to="/signup" mr={4}>
             SignUp
           </NavLink>
-        </Box>
+        </Flex>
       )}
     </Flex>
   );
