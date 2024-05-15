@@ -38,9 +38,11 @@ EventSpark/<br>
 
 
 ## Deployed App
-Frontend: https://66435a16dad2f7190f782ead--courageous-daffodil-7de258.netlify.app/ </br>
+Frontend: https://university-dashboard-assignment.netlify.app/ </br>
 Backend: https://university-dashboard-rurux.onrender.com/
-
+## Admin credentials:
+email:admine@1234
+password:1234
 <br/>
 <br/>
 
