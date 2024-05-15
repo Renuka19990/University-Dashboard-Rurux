@@ -11,7 +11,7 @@ const MarksPage = () => {
   const fetchStudentList = async () => {
     try {
       const response = await fetch(
-        "https://university-dashboard-rurux.onrender.com/admin/studentlist"
+        "https://university-dashboard-rurux.onrender.com/adminApi/studentlist"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch student list");

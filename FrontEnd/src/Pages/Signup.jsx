@@ -29,7 +29,7 @@ function Signup() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://university-dashboard-rurux.onrender.com/student/register', {
+      const response = await fetch('https://university-dashboard-rurux.onrender.com/studentApi/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

@@ -20,7 +20,7 @@ const StreamPage = () => {
   const fetchStudentList = async () => {
     try {
       const response = await fetch(
-        "https://university-dashboard-rurux.onrender.com/admin/studentlist"
+        "https://university-dashboard-rurux.onrender.com/adminApi/studentlist"
       );
       if (!response.ok) {
         throw new Error("Failed to fetch student list");
@@ -40,7 +40,7 @@ const StreamPage = () => {
   const handleDelete = async (id) => {
     try {
       const response = await fetch(
-        `https://university-dashboard-rurux.onrender.com/admin/studentlist/${id}`,
+        `https://university-dashboard-rurux.onrender.com/adminApi/studentlist/${id}`,
         {
           method: "DELETE",
         }
@@ -58,7 +58,7 @@ const StreamPage = () => {
   const fetchMarks = async (id) => {
     try {
       const response = await fetch(
-        `https://university-dashboard-rurux.onrender.com/admin/marks/${id}`
+        `https://university-dashboard-rurux.onrender.com/adminApi/marks/${id}`
       );
       if (!response.ok) {
         throw new Error("Failed to fetch marks");

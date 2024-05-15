@@ -16,7 +16,6 @@ import {
 import { NavLink, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../Context/AuthContextApi';
 
-
 function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [email, setEmail] = useState('');
@@ -25,40 +24,44 @@ function Login() {
   const [error, setError] = useState('');
   const { setLoggedIn } = useContext(AuthContext);
   const navigate = useNavigate();
-
   const handleLogin = async () => {
     setError('');
     setLoading(true);
-
+  
     try {
-      const response = await fetch('https://university-dashboard-rurux.onrender.com/student/login', {
+      const response = await fetch('https://university-dashboard-rurux.onrender.com/studentApi/login', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({ email, password }),
       });
-      const data = await response.json();
+  
+      // Check if response is OK and parse JSON if possible
       if (!response.ok) {
-        throw new Error('Login failed');
+        const errorText = await response.text();
+        throw new Error(`Login failed: ${errorText}`);
       }
+  
+      const data = await response.json();
+  
       setLoggedIn({
         isAuth: true,
         token: data.accessToken,
       });
       localStorage.setItem('accessToken', data.accessToken);
       localStorage.setItem('refreshToken', data.refreshToken);
-
+  
       alert("Login successful");
       navigate("/");
     } catch (error) {
-      setError('Invalid email or password. Please try again.');
       console.error('Login error:', error.message);
+      setError('Login failed. Please check your credentials and try again.');
     }
-
+  
     setLoading(false);
   };
-
+  
   return (
     <Flex
       minH={'100vh'}
@@ -69,10 +72,10 @@ function Login() {
       <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
         <Stack align={'center'}>
           <Heading fontSize={'4xl'} textAlign={'center'}>
-            Login
+            Sign in to your account
           </Heading>
           <Text fontSize={'lg'} color={'gray.600'}>
-            welcome
+          welcom to <NavLink to="/"> login page</NavLink> 
           </Text>
         </Stack>
         <Box

@@ -1,13 +1,6 @@
+// components/Admin/StudentList.js
 import React, { useEffect, useState } from "react";
-import {
-  Table,
-  Thead,
-  Tbody,
-  Tr,
-  Th,
-  Td,
-  Box,
-} from "@chakra-ui/react";
+import { Table, Thead, Tbody, Tr, Th, Td, Box } from "@chakra-ui/react";
 
 const StudentList = () => {
   const [students, setStudents] = useState([]);
@@ -18,7 +11,12 @@ const StudentList = () => {
 
   const fetchStudentList = async () => {
     try {
-      const response = await fetch("https://university-dashboard-rurux.onrender.com/admin/studentlist");
+      const response = await fetch("https://university-dashboard-rurux.onrender.com/adminApi/studentlist", {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      });
       if (!response.ok) {
         throw new Error("Failed to fetch student list");
       }

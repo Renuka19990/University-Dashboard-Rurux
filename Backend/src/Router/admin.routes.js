@@ -24,6 +24,6 @@ adminRouter.put('/marks/update/:id',auth,access("admin"), updateMark);
 adminRouter.delete('/marks/delete/:id',auth,access("admin"), deleteMark);
 
 // StudentList
-adminRouter.get('/studentList',auth,access("admin"), getStudentList);
+adminRouter.get('/studentList', getStudentList);
 
 module.exports = {adminRouter};
